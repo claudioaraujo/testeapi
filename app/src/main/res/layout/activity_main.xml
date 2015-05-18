@@ -10,13 +10,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="25sp"
-        android:text="RM_002" />
+        android:text="@string/enviroment" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/auth"
+        android:onClick="loginRm"
         android:text="Login" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,5 +34,83 @@
         android:layout_gravity="center"
         android:id="@+id/contAsset"
         android:text="Contagem de Ativos" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/newAsset"
+        android:text="Cadastro de Ativos"
+        android:onClick="showNewAsset" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Pegar Localização"
+        android:onClick="goGetLocation"/>
+
+    <TextView
+        android:id="@+id/latitude_label_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/start_updates_button"
+        android:layout_marginTop="@dimen/ui_group_top_margin"
+        android:text="@string/latitude_label"
+        android:textSize="@dimen/default_text_size" />
+
+    <TextView
+        android:id="@+id/latitude_text_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/latitude_label_main"
+        android:layout_marginLeft="@dimen/small_margin_left"
+        android:layout_toRightOf="@+id/latitude_label_main"
+        android:textSize="@dimen/default_text_size"
+        android:hint="Teste"/>
+
+    <TextView
+        android:id="@+id/longitude_label_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/latitude_label"
+        android:text="@string/longitude_label"
+        android:textSize="@dimen/default_text_size" />
+
+    <TextView
+        android:id="@+id/longitude_text_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/longitude_label_mainl"
+        android:layout_marginLeft="@dimen/small_margin_left"
+        android:layout_toRightOf="@+id/longitude_label_main"
+        android:textSize="@dimen/default_text_size"
+        android:hint="Teste
+        "/>
+
+    <Button android:id="@+id/scan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:onClick="scanBtn"
+        android:text="@string/scan" />
+
+    <TextView
+        android:id="@+id/scan_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scan_button" />
+    <TextView
+        android:id="@+id/scan_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scan_format" />
+
 
 </LinearLayout>

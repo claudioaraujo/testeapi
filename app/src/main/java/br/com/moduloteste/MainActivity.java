@@ -1,11 +1,16 @@
 package br.com.moduloteste;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +24,14 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,21 +41,36 @@ import java.io.IOException;
 
 public class MainActivity extends Activity {
 
-    private static String CLIENT_ID = "474428758805435f83472e50987a314b";
+    //int clientId = R.string.client_id;
+    //int clientSecret = R.string.client_secret;
+    //String CLIENT_ID = (String) getResources().getText(clientId);
+    //String CLIENT_SECRET = (String) getResources().getText(clientSecret);
+
+    static final int GET_LOCATION_RESPONSE = 11;
+    public final static String TOKEN = "";
+    private static String CLIENT_ID = "7fbece65dc0447f7824c589f1f86e0eb";
     //Use your own client id
-    private static String CLIENT_SECRET ="3e67cc9b52d642e397d2296a7c6f5f6a";
+    private static String CLIENT_SECRET ="1504e09e14f14bd5a749652d40652473";
     //Use your own client secret
     private static String REDIRECT_URI="calls://auth";
     private static String GRANT_TYPE="authorization_code";
-    private static String TOKEN_URL ="https://demo.riskmanager.modulo.com/RM_002/APIIntegration/Token";
-    private static String OAUTH_URL ="https://demo.riskmanager.modulo.com/RM_002/APIIntegration/AuthorizeFeatures";
-    private static String CONT_ASSET_URL ="https://demo.riskmanager.modulo.com/RM_002/api/organization/assets/count";
+    private static String TOKEN_URL ="https://demo.riskmanager.modulo.com/RM_240/APIIntegration/Token";
+    private static String OAUTH_URL ="https://demo.riskmanager.modulo.com/RM_240/APIIntegration/AuthorizeFeatures";
+    private static String CONT_ASSET_URL ="https://demo.riskmanager.modulo.com/RM_240/api/organization/assets/count";
+    private Bundle location;
     //Change the Scope as you need
     WebView web;
     Button auth;
     SharedPreferences pref;
     TextView Access;
     String tok;
+
+    protected TextView mLatitudeTextView;
+    protected TextView mLongitudeTextView;
+
+    private Button scanBtn;
+    private TextView formatTxt, contentTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +79,14 @@ public class MainActivity extends Activity {
         Access =(TextView)findViewById(R.id.Access);
         auth = (Button)findViewById(R.id.auth);
         Button contAsset = (Button) findViewById(R.id.contAsset);
+
+        scanBtn = (Button)findViewById(R.id.scan_button);
+        formatTxt = (TextView)findViewById(R.id.scan_format);
+        contentTxt = (TextView)findViewById(R.id.scan_content);
+
+        mLatitudeTextView = (TextView) findViewById(R.id.latitude_text_main);
+        mLongitudeTextView = (TextView) findViewById(R.id.longitude_text_main);
+
         auth.setOnClickListener(new View.OnClickListener() {
             Dialog auth_dialog;
             @Override
@@ -165,7 +201,7 @@ public class MainActivity extends Activity {
                     Log.d("Expire", expire);
                     Log.d("Refresh", refresh);
                     auth.setText("Autenticado");
-                    Access.setText("Access Token:"+tok+"nExpires:"+expire+"nRefresh Token:"+refresh);
+                    Access.setText(tok);
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -176,5 +212,41 @@ public class MainActivity extends Activity {
                 pDialog.dismiss();
             }
         }
+    }
+    @TargetApi(21)
+
+    public void showNewAsset(View view) {
+        Intent intent = new Intent(this, NewAssetActivity.class);
+        TextView tokenText = (TextView) findViewById(R.id.Access);
+        String token = tokenText.getText().toString();
+        intent.putExtra(TOKEN, token);
+        startActivity(intent);
+    }
+    public void goGetLocation(View view){
+        Intent intent = new Intent(this, GeoLocationTest.class);
+        startActivityForResult(intent, GET_LOCATION_RESPONSE);
+    }
+    public void scanBtn(View view){
+        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        scanIntegrator.initiateScan();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == 11){
+            super.onActivityResult(requestCode, resultCode, data);
+            mLatitudeTextView.setText(String.valueOf(data.getDoubleExtra("Latitude",0)));
+            mLongitudeTextView.setText(String.valueOf(data.getDoubleExtra("Longitude", 0)));
+        }else {
+
+            IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+            formatTxt.setText("FORMAT: " + scanFormat);
+            contentTxt.setText("CONTENT: " + scanContent);
+        }
+
+
     }
 }
