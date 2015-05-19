@@ -6,10 +6,16 @@
     <string name="title_activity_get_access_token">GetAccessToken</string>
     <string name="title_activity_new_asset">Novo Ativo</string>
     <string name="insert_asset">Cadastrar ativo</string>
+
     <string name="enviroment">RM_240</string>
     <string name="enviroment_url">https://demo.riskmanager.modulo.com/RM_240</string>
     <string name="client_id">7fbece65dc0447f7824c589f1f86e0eb</string>
     <string name="client_secret">1504e09e14f14bd5a749652d40652473</string>
+    <string name="redirect_uri">calls://auth</string>
+    <string name="grant_type">authorization_code</string>
+    <string name="token_url">https://demo.riskmanager.modulo.com/RM_240/APIIntegration/Token</string>
+    <string name="oauth_url">https://demo.riskmanager.modulo.com/RM_240/APIIntegration/AuthorizeFeatures</string>
+
     <string name="title_activity_geo_location_test">GeoLocationTest</string>
     <string name="ok">OK</string>
 
@@ -18,8 +24,10 @@
     <string name="asset_type_label">Tipo de ativo:</string>
     <string-array name="asset_type">
         <item></item>
-        <item>Tecnologia</item>
         <item>Ambiente</item>
+        <item>Pessoa</item>
+        <item>Processo</item>
+        <item>Tecnologia</item>
     </string-array>
 
     <string name="latitude_label">Latitude:</string>
@@ -31,7 +39,8 @@
     <string-array name="perimeter">
         <item></item>
         <item>API</item>
-        <item>API2</item>
+        <item>Projetos</item>
+        <item>Turismo</item>
     </string-array>
 
     <string name="start_updates">Iniciar atualização</string>

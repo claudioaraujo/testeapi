@@ -115,7 +115,9 @@ public class NewAssetActivity extends ActionBarActivity {
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-            descriptionText.setText("Formato: " + scanFormat + " / Codigo: " + scanContent);
+            if (scanContent != null ) {
+                descriptionText.setText("Formato: " + scanFormat + " / Codigo: " + scanContent);
+            }
         }
 
 
@@ -137,6 +139,7 @@ public class NewAssetActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String oid) {
             Toast.makeText(getApplicationContext(), "Cadastro realizado com sucesso.", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
     }

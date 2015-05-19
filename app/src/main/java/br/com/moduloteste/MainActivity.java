@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -26,43 +27,62 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import br.com.moduloteste.api.call.HttpsCall;
 import br.com.moduloteste.controller.GeoLocationController;
 
 
 public class MainActivity extends Activity {
 
-    //int clientId = R.string.client_id;
-    //int clientSecret = R.string.client_secret;
-    //String CLIENT_ID = (String) getResources().getText(clientId);
-    //String CLIENT_SECRET = (String) getResources().getText(clientSecret);
+    int clientId = R.string.client_id;
+    int clientSecret = R.string.client_secret;
+    int redirectUri = R.string.redirect_uri;
+    int grantType = R.string.grant_type;
+    int tokenUrl = R.string.token_url;
+    int oauthUrl = R.string.oauth_url;
 
+    private static String CLIENT_ID = "";
+    private static String CLIENT_SECRET = "";
+    private static String REDIRECT_URI = "";
+    private static String GRANT_TYPE = "";
+    private static String TOKEN_URL = "";
+    private static String OAUTH_URL = "";
 
     public final static String TOKEN = "";
-    private static String CLIENT_ID = "7fbece65dc0447f7824c589f1f86e0eb";
-    //Use your own client id
-    private static String CLIENT_SECRET ="1504e09e14f14bd5a749652d40652473";
-    //Use your own client secret
-    private static String REDIRECT_URI="calls://auth";
-    private static String GRANT_TYPE="authorization_code";
-    private static String TOKEN_URL ="https://demo.riskmanager.modulo.com/RM_240/APIIntegration/Token";
-    private static String OAUTH_URL ="https://demo.riskmanager.modulo.com/RM_240/APIIntegration/AuthorizeFeatures";
-    private static String CONT_ASSET_URL ="https://demo.riskmanager.modulo.com/RM_240/api/organization/assets/count";
+
+    //Codigo migrado para strings.xml
+    //private static String CLIENT_ID = "7fbece65dc0447f7824c589f1f86e0eb";
+    //private static String CLIENT_SECRET ="1504e09e14f14bd5a749652d40652473";
+    //private static String REDIRECT_URI="calls://auth";
+    //private static String GRANT_TYPE="authorization_code";
+    //private static String ENVIROMENT_URL ="https://demo.riskmanager.modulo.com/RM_240";
+    //private static String TOKEN_URL ="https://demo.riskmanager.modulo.com/RM_240/APIIntegration/Token";
+    //private static String OAUTH_URL ="https://demo.riskmanager.modulo.com/RM_240/APIIntegration/AuthorizeFeatures";
+    //private static String CONT_ASSET_URL ="https://demo.riskmanager.modulo.com/RM_240/api/organization/assets/count";
+
     private Bundle location;
     //Change the Scope as you need
     WebView web;
     Button auth;
     SharedPreferences pref;
     TextView Access;
-    String tok;
+    private static String tok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Identificação do ambiente
+        CLIENT_ID = (String) this.getResources().getText(clientId);
+        CLIENT_SECRET = (String) this.getResources().getText(clientSecret);
+        REDIRECT_URI = (String) this.getResources().getText(redirectUri);
+        GRANT_TYPE = (String) this.getResources().getText(grantType);
+        TOKEN_URL = (String) this.getResources().getText(tokenUrl);
+        OAUTH_URL = (String) this.getResources().getText(oauthUrl);
+
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         Access =(TextView)findViewById(R.id.Access);
         auth = (Button)findViewById(R.id.auth);
-        Button contAsset = (Button) findViewById(R.id.contAsset);
 
         auth.setOnClickListener(new View.OnClickListener() {
             Dialog auth_dialog;
@@ -120,19 +140,6 @@ public class MainActivity extends Activity {
                 auth_dialog.setCancelable(true);
             }
         });
-
-        contAsset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GetTotalAsset contAsset = new GetTotalAsset();
-
-                try {
-                    contAsset.contAsset(tok, CONT_ASSET_URL);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     private class TokenGet extends AsyncTask<String, String, JSONObject> {
@@ -152,12 +159,18 @@ public class MainActivity extends Activity {
         @Override
         protected JSONObject doInBackground(String... args) {
             GetAccessToken jParser = new GetAccessToken();
+            HttpsCall httpsCall = new HttpsCall();
+
             JSONObject json = null;
+            JSONObject jsonUser = null;
             try {
                 json = jParser.getToken(TOKEN_URL, Code, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, GRANT_TYPE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+                if (json != null) {
+                    tok = json.getString("access_token");
+                    //jsonUser = httpsCall.getUser(tok, ENVIROMENT_URL);
+                    //System.out.print("r");
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return json;
@@ -167,25 +180,16 @@ public class MainActivity extends Activity {
         protected void onPostExecute(JSONObject json) {
             pDialog.dismiss();
             if (json != null){
-
                 try {
-
-                    tok = json.getString("access_token");
-                    String expire = json.getString("expires_in");
-                    String refresh = json.getString("refresh_token");
-
-                    Log.d("Token Access", tok);
-                    Log.d("Expire", expire);
-                    Log.d("Refresh", refresh);
+                    //tok = json.getString("access_token");
                     auth.setText("Autenticado");
                     Access.setText(tok);
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }else{
-                Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                 pDialog.dismiss();
             }
         }
