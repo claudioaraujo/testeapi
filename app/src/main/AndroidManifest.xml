@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GeoLocationTest"
+            android:name=".controller.GeoLocationController"
             android:label="@string/title_activity_geo_location_test"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">

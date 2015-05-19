@@ -1,3 +1,8 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -7,26 +12,89 @@
     tools:context="br.com.moduloteste.NewAssetActivity"
     android:orientation="vertical">
 
+    <TextView
+        android:textStyle="bold|italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/asset_name_label"/>
     <EditText
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:id="@+id/asset_name"
-        android:hint="@string/asset_name"/>
+        android:id="@+id/asset_name"/>
 
+    <TextView
+        android:textStyle="bold|italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/asset_type_label"/>
     <Spinner
         android:id="@+id/asset_type"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:textStyle="bold|italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/perimeter_label"/>
     <Spinner
         android:id="@+id/perimeter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:textStyle="bold|italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/relevance_label"/>
     <Spinner
         android:id="@+id/relevance"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:textStyle="bold|italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/latitude_label"/>
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/asset_latitude"/>
+
+    <TextView
+        android:textStyle="bold|italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/longitude_label"/>
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/asset_longitude"/>
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/location"
+        android:text="@string/get_location"
+        android:onClick="goGetLocation"/>
+
+    <TextView
+        android:textStyle="bold|italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/description_label"/>
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/asset_description"/>
+
+    <ImageButton
+        android:id="@+id/scan_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/barcode_scanner"
+        android:onClick="scanBtn"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -37,3 +105,4 @@
         android:onClick="insertAsset"/>
 
 </LinearLayout>
+</ScrollView>

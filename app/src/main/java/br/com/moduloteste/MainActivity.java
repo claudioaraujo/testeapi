@@ -10,25 +10,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +26,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import br.com.moduloteste.controller.GeoLocationController;
+
 
 public class MainActivity extends Activity {
 
@@ -46,7 +36,7 @@ public class MainActivity extends Activity {
     //String CLIENT_ID = (String) getResources().getText(clientId);
     //String CLIENT_SECRET = (String) getResources().getText(clientSecret);
 
-    static final int GET_LOCATION_RESPONSE = 11;
+
     public final static String TOKEN = "";
     private static String CLIENT_ID = "7fbece65dc0447f7824c589f1f86e0eb";
     //Use your own client id
@@ -65,12 +55,6 @@ public class MainActivity extends Activity {
     TextView Access;
     String tok;
 
-    protected TextView mLatitudeTextView;
-    protected TextView mLongitudeTextView;
-
-    private Button scanBtn;
-    private TextView formatTxt, contentTxt;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,13 +63,6 @@ public class MainActivity extends Activity {
         Access =(TextView)findViewById(R.id.Access);
         auth = (Button)findViewById(R.id.auth);
         Button contAsset = (Button) findViewById(R.id.contAsset);
-
-        scanBtn = (Button)findViewById(R.id.scan_button);
-        formatTxt = (TextView)findViewById(R.id.scan_format);
-        contentTxt = (TextView)findViewById(R.id.scan_content);
-
-        mLatitudeTextView = (TextView) findViewById(R.id.latitude_text_main);
-        mLongitudeTextView = (TextView) findViewById(R.id.longitude_text_main);
 
         auth.setOnClickListener(new View.OnClickListener() {
             Dialog auth_dialog;
@@ -213,7 +190,6 @@ public class MainActivity extends Activity {
             }
         }
     }
-    @TargetApi(21)
 
     public void showNewAsset(View view) {
         Intent intent = new Intent(this, NewAssetActivity.class);
@@ -222,31 +198,5 @@ public class MainActivity extends Activity {
         intent.putExtra(TOKEN, token);
         startActivity(intent);
     }
-    public void goGetLocation(View view){
-        Intent intent = new Intent(this, GeoLocationTest.class);
-        startActivityForResult(intent, GET_LOCATION_RESPONSE);
-    }
-    public void scanBtn(View view){
-        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-        scanIntegrator.initiateScan();
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if(requestCode == 11){
-            super.onActivityResult(requestCode, resultCode, data);
-            mLatitudeTextView.setText(String.valueOf(data.getDoubleExtra("Latitude",0)));
-            mLongitudeTextView.setText(String.valueOf(data.getDoubleExtra("Longitude", 0)));
-        }else {
-
-            IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
-            formatTxt.setText("FORMAT: " + scanFormat);
-            contentTxt.setText("CONTENT: " + scanContent);
-        }
-
-
-    }
 }

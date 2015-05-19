@@ -1,4 +1,4 @@
-package br.com.moduloteste;
+package br.com.moduloteste.controller;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -33,8 +33,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.text.DateFormat;
 import java.util.Date;
 
+import br.com.moduloteste.R;
 
-public class GeoLocationTest extends FragmentActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
+
+public class GeoLocationController extends FragmentActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
 
 
     protected static final String TAG = "location-updates-sample";

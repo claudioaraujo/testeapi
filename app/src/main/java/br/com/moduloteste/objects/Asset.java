@@ -10,6 +10,9 @@ public class Asset {
     private String type;
     private String relevance;
     private String perimeter;
+    private String latitude;
+    private String longitude;
+    private String description;
 
 
     public String getName() {
@@ -52,10 +55,37 @@ public class Asset {
             jo.put("Path", asset.getPerimeter());
             jo.put("AssetType", asset.getType());
             jo.put("Relevance", asset.getRelevance());
+            jo.put("Description", asset.getDescription());
+            jo.put("Latitude", asset.getLatitude());
+            jo.put("Longitude", asset.getLongitude());
         }catch (Exception e){
             e.printStackTrace();
         }
 
         return jo.toString();
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

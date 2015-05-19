@@ -1,5 +1,6 @@
 package br.com.moduloteste;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -7,17 +8,24 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.io.IOException;
 
+import br.com.moduloteste.controller.GeoLocationController;
 import br.com.moduloteste.controller.OrganizationController;
 import br.com.moduloteste.objects.Asset;
 
 public class NewAssetActivity extends ActionBarActivity {
 
+    static final int GET_LOCATION_RESPONSE = 11;
     private String address;
     private String token;
     private Asset asset = new Asset();
@@ -43,6 +51,16 @@ public class NewAssetActivity extends ActionBarActivity {
         relevanceSpinner.setAdapter(relevanceAdapter);
     }
 
+    public void goGetLocation(View view){
+        Intent intent = new Intent(this, GeoLocationController.class);
+        startActivityForResult(intent, GET_LOCATION_RESPONSE);
+    }
+
+    public void scanBtn(View view){
+        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        scanIntegrator.initiateScan();
+    }
+
     public void insertAsset(View view){
         try {
             int addressId = R.string.enviroment_url;
@@ -63,11 +81,44 @@ public class NewAssetActivity extends ActionBarActivity {
             Spinner relevanceSpinner = (Spinner) findViewById(R.id.relevance);
             asset.setRelevance(relevanceSpinner.getSelectedItem().toString());
 
+            EditText editLatitude = (EditText) findViewById(R.id.asset_latitude);
+            asset.setLatitude(editLatitude.getText().toString());
+
+            EditText editLongitude = (EditText) findViewById(R.id.asset_longitude);
+            asset.setLongitude(editLongitude.getText().toString());
+
+            EditText editDescription = (EditText) findViewById(R.id.asset_description);
+            asset.setDescription(editDescription.getText().toString());
+
             new process().execute();
 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @TargetApi(21)
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == 11){
+            super.onActivityResult(requestCode, resultCode, data);
+            EditText mLatitudeText = (EditText) findViewById(R.id.asset_latitude);
+            EditText mLongitudeText = (EditText) findViewById(R.id.asset_longitude);
+
+            mLatitudeText.setText(String.valueOf(data.getDoubleExtra("Latitude",0)));
+            mLongitudeText.setText(String.valueOf(data.getDoubleExtra("Longitude", 0)));
+        }else {
+            TextView descriptionText = (TextView)findViewById(R.id.asset_description);
+
+            IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+            descriptionText.setText("Formato: " + scanFormat + " / Codigo: " + scanContent);
+        }
+
+
     }
 
     public class process extends AsyncTask<String, Void, String>{
