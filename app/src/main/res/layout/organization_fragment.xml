@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/gradient"
+    android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/ativos"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ativo"
+            android:drawableLeft="@drawable/ico_organization_assetmanagement"
+            android:gravity="center_vertical|left"
+            android:elegantTextHeight="false"
+            android:background="@color/RMBlueTransparent"
+            android:clickable="true"
+            android:singleLine="false" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="15dp" />
+
+        <Button
+            android:id="@+id/pessoas"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pessoa"
+            android:drawableLeft="@drawable/ico_organization_humanresources"
+            android:gravity="center_vertical|left"
+            android:background="@color/RMBlueTransparent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="15dp" />
+
+        <Button
+            android:id="@+id/projetos"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/projetos"
+            android:drawableLeft="@drawable/ico_project_bg"
+            android:gravity="center_vertical|left"
+            android:background="@color/RMBlueTransparent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="15dp" />
+
+        <Button
+            android:id="@+id/componentesDeNegocio"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/componentesDeNegocio"
+            android:drawableLeft="@drawable/ico_organization_businesscomponents"
+            android:gravity="center_vertical|left"
+            android:background="@color/RMBlueTransparent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="15dp" />
+
+        <Button
+            android:id="@+id/relatorios"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/relatorios"
+            android:drawableLeft="@drawable/ico_report_default_80"
+            android:gravity="center_vertical|left"
+            android:background="@color/RMBlueTransparent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="15dp" />
+
+
+</LinearLayout>
