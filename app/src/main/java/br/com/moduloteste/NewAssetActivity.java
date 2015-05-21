@@ -3,12 +3,10 @@ package br.com.moduloteste;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,8 +14,6 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.io.IOException;
 
 import br.com.moduloteste.controller.GeoLocationController;
 import br.com.moduloteste.controller.OrganizationController;
@@ -67,7 +63,7 @@ public class NewAssetActivity extends ActionBarActivity {
             address = (String) getResources().getText(addressId);
 
             Intent intent = getIntent();
-            token = intent.getStringExtra(MainActivity.TOKEN);
+            token = intent.getStringExtra(LoginActivity.TOKEN);
 
             EditText editAssetName = (EditText) findViewById(R.id.asset_name);
             asset.setName(editAssetName.getText().toString());

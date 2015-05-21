@@ -23,10 +23,10 @@ public class SplashScreenActivity extends Activity {
                 finish();
 
                 Intent intent = new Intent();
-                intent.setClass(SplashScreenActivity.this, MainActivity.class);
+                intent.setClass(SplashScreenActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
-        }, 6000);
+        }, 3000);
     }
 
     @Override

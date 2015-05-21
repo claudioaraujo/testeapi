@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WebOauth2</string>
+    <string name="app_name">Risk Manager</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -63,4 +63,34 @@
 
     <string name="scan">Scan</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="title_activity_risk_manager_main">RiskManagerMainActivity</string>
+
+    <string name="title_activity_main"></string>
+
+    <string name="drawer_open">Abrir navigation drawer</string>
+    <string name="drawer_close">Fechar navigation drawer</string>
+
+    <string-array name="itens_menu_string">
+        <item>Meu Espaço</item>
+        <item>Organização</item>
+        <item>ERM</item>
+        <item>Risco</item>
+        <item>Conformidade</item>
+        <item>Workflow</item>
+        <item>Eventos</item>
+    </string-array>
+
+    <string name="option_frag_txt01">Frag01</string>
+    <string name="option_frag_txt02">Frag02</string>
+    <string name="option_frag_txt03">Frag03</string>
+    <string name="option_frag_txt04">Frag04</string>
+
+    <string name="ativo">ATIVOS\n\nGerenciar Ativos</string>
+    <string name="pessoa">PESSOAS\n\nGestão de Pessoas e Grupos</string>
+    <string name="projetos">PROJETOS\n\nCriar e Listar Projetos</string>
+    <string name="componentesDeNegocio">COMPONENTES DE NEGÓCIO\n\n Gerenciar Componentes de Negócio</string>
+    <string name="relatorios">RELATÓRIO\n\nGerar Relatórios, Modelos e Agendamentos</string>
+
+
+    <string name="version">9.2.135.22</string>
 </resources>

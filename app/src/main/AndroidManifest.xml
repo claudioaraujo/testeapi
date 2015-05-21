@@ -14,25 +14,25 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".controller.GeoLocationController"
             android:label="@string/title_activity_geo_location_test"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".LoginActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.moduloteste.MainActivity" />
+                android:value=".LoginActivity" />
         </activity>
         <activity
             android:name=".NewAssetActivity"
             android:label="@string/title_activity_new_asset"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.moduloteste.MainActivity" />
+                android:value=".LoginActivity" />
         </activity>
 
         <meta-data
@@ -42,6 +42,11 @@
         <activity
             android:name=".SplashScreenActivity"
             android:label="@string/title_activity_splash_screen" >
+
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

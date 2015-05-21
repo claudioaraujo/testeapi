@@ -1,206 +1,147 @@
 package br.com.moduloteste;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.AsyncTask;
+import android.content.res.Configuration;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import br.com.moduloteste.api.call.HttpsCall;
-import br.com.moduloteste.controller.GeoLocationController;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity  {
 
-    int clientId = R.string.client_id;
-    int clientSecret = R.string.client_secret;
-    int redirectUri = R.string.redirect_uri;
-    int grantType = R.string.grant_type;
-    int tokenUrl = R.string.token_url;
-    int oauthUrl = R.string.oauth_url;
+    private DrawerLayout drawerLayout;
+    private ListView drawerList;
+    private ActionBarDrawerToggle drawerToggle;
+    private String[] textOptions;
+    private ActionBar actionBar;
+    private DrawerItemClickListener listener;
+    private Fragment currentFragment;
 
-    private static String CLIENT_ID = "";
-    private static String CLIENT_SECRET = "";
-    private static String REDIRECT_URI = "";
-    private static String GRANT_TYPE = "";
-    private static String TOKEN_URL = "";
-    private static String OAUTH_URL = "";
+    public static final String OPTION = "option";
 
-    public final static String TOKEN = "";
+    public static final String TOKEN = "token";
 
-    //Codigo migrado para strings.xml
-    //private static String CLIENT_ID = "7fbece65dc0447f7824c589f1f86e0eb";
-    //private static String CLIENT_SECRET ="1504e09e14f14bd5a749652d40652473";
-    //private static String REDIRECT_URI="calls://auth";
-    //private static String GRANT_TYPE="authorization_code";
-    //private static String ENVIROMENT_URL ="https://demo.riskmanager.modulo.com/RM_240";
-    //private static String TOKEN_URL ="https://demo.riskmanager.modulo.com/RM_240/APIIntegration/Token";
-    //private static String OAUTH_URL ="https://demo.riskmanager.modulo.com/RM_240/APIIntegration/AuthorizeFeatures";
-    //private static String CONT_ASSET_URL ="https://demo.riskmanager.modulo.com/RM_240/api/organization/assets/count";
-
-    private Bundle location;
-    //Change the Scope as you need
-    WebView web;
-    Button auth;
-    SharedPreferences pref;
-    TextView Access;
-    private static String tok;
+    private static String tokenValue = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Identificação do ambiente
-        CLIENT_ID = (String) this.getResources().getText(clientId);
-        CLIENT_SECRET = (String) this.getResources().getText(clientSecret);
-        REDIRECT_URI = (String) this.getResources().getText(redirectUri);
-        GRANT_TYPE = (String) this.getResources().getText(grantType);
-        TOKEN_URL = (String) this.getResources().getText(tokenUrl);
-        OAUTH_URL = (String) this.getResources().getText(oauthUrl);
-
-        pref = getSharedPreferences("AppPref", MODE_PRIVATE);
-        Access =(TextView)findViewById(R.id.Access);
-        auth = (Button)findViewById(R.id.auth);
-
-        auth.setOnClickListener(new View.OnClickListener() {
-            Dialog auth_dialog;
-            @Override
-            public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                auth_dialog = new Dialog(MainActivity.this);
-                auth_dialog.setContentView(R.layout.auth_dialog);
-                web = (WebView)auth_dialog.findViewById(R.id.webv);
-                web.getSettings().setJavaScriptEnabled(true);
-                web.loadUrl(OAUTH_URL+"?redirect_uri="+REDIRECT_URI+"&response_type=code&client_id="+CLIENT_ID);
-                web.setWebViewClient(new WebViewClient() {
-
-                    boolean authComplete = false;
-                    Intent resultIntent = new Intent();
-
-                    @Override
-                    public void onPageStarted(WebView view, String url, Bitmap favicon){
-                        super.onPageStarted(view, url, favicon);
-
-                    }
-                    String authCode;
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        super.onPageFinished(view, url);
-
-                        if (url.contains("?code=") && authComplete != true) {
-                            Uri uri = Uri.parse(url);
-                            authCode = uri.getQueryParameter("code");
-                            Log.i("", "CODE : " + authCode);
-                            authComplete = true;
-                            resultIntent.putExtra("code", authCode);
-                            MainActivity.this.setResult(Activity.RESULT_OK, resultIntent);
-                            setResult(Activity.RESULT_CANCELED, resultIntent);
-
-                            SharedPreferences.Editor edit = pref.edit();
-                            edit.putString("Code", authCode);
-                            edit.commit();
-                            auth_dialog.dismiss();
-                            new TokenGet().execute();
-                            Toast.makeText(getApplicationContext(), "Código de acesso: " + authCode, Toast.LENGTH_SHORT).show();
-                        }else if(url.contains("error=access_denied")){
-                            Log.i("", "ACCESS_DENIED_HERE");
-                            resultIntent.putExtra("code", authCode);
-                            authComplete = true;
-                            setResult(Activity.RESULT_CANCELED, resultIntent);
-                            Toast.makeText(getApplicationContext(), "Error Occured", Toast.LENGTH_SHORT).show();
-
-                            auth_dialog.dismiss();
-                        }
-                    }
-                });
-                auth_dialog.show();
-                auth_dialog.setTitle("Login no RM");
-                auth_dialog.setCancelable(true);
-            }
-        });
-    }
-
-    private class TokenGet extends AsyncTask<String, String, JSONObject> {
-        private ProgressDialog pDialog;
-        String Code;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Conectando ao RM ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            Code = pref.getString("Code", "");
-            pDialog.show();
-        }
-
-        @Override
-        protected JSONObject doInBackground(String... args) {
-            GetAccessToken jParser = new GetAccessToken();
-            HttpsCall httpsCall = new HttpsCall();
-
-            JSONObject json = null;
-            JSONObject jsonUser = null;
-            try {
-                json = jParser.getToken(TOKEN_URL, Code, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, GRANT_TYPE);
-                if (json != null) {
-                    tok = json.getString("access_token");
-                    //jsonUser = httpsCall.getUser(tok, ENVIROMENT_URL);
-                    //System.out.print("r");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return json;
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject json) {
-            pDialog.dismiss();
-            if (json != null){
-                try {
-                    //tok = json.getString("access_token");
-                    auth.setText("Autenticado");
-                    Access.setText(tok);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }else{
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                pDialog.dismiss();
-            }
+        initViews();
+        onConfigListener();
+        onConfigListItem();
+        onConfigActionBar();
+        Intent intent = getIntent();
+        tokenValue = intent.getStringExtra(LoginActivity.TOKEN);
+        //Se ainda nao foi clicado em nenhum item do menu (esta abrindo pela primeira vez), sera exibido o fragment com o texto configurado para a opcao01
+        if (currentFragment == null) {
+            replaceFirstFrag();
         }
     }
 
-    public void showNewAsset(View view) {
-        Intent intent = new Intent(this, NewAssetActivity.class);
-        TextView tokenText = (TextView) findViewById(R.id.Access);
-        String token = tokenText.getText().toString();
-        intent.putExtra(TOKEN, token);
-        startActivity(intent);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
+    private void initViews(){
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        drawerList = (ListView) findViewById(R.id.left_drawer);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+            public void onDrawerClosed(View view) {
+                supportInvalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                supportInvalidateOptionsMenu();
+            }
+        };
+        textOptions = getResources().getStringArray(R.array.itens_menu_string);
+        actionBar = getSupportActionBar();
+        listener = new DrawerItemClickListener(drawerLayout, drawerList,this);
+    }
+
+    private void onConfigListener(){
+
+        drawerList.setOnItemClickListener(listener);
+        drawerLayout.setDrawerListener(drawerToggle);
+
+    }
+
+    private void onConfigListItem(){
+
+        drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, textOptions));
+
+    }
+
+    private void onConfigActionBar(){
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+        return super.onOptionsItemSelected(item);
+    }
+    /**
+     * Substitui o conteudo do fragment
+     * @param frag
+     */
+    public final void replaceFragment(final Fragment frag){
+
+        currentFragment = frag;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, frag).commit();
+
+    }
+    /**
+     * Substistui o conteudo para o primeiro fragment
+     */
+    private void replaceFirstFrag() {
+
+        currentFragment = new OptionFragment();
+        Bundle args = new Bundle();
+        args.putInt(OPTION, 0);
+        args.putString(TOKEN, tokenValue);
+        currentFragment.setArguments(args);
+        replaceFragment(currentFragment);
+
+    }
 }

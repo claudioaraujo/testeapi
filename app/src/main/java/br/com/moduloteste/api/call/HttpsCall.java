@@ -45,4 +45,32 @@ public class HttpsCall {
 
         return oid;
     }
+
+    public void getJson (String address, String token){
+        try{
+            URL url = new URL(address);
+            HttpsURLConnection httpsConnection = (HttpsURLConnection)url.openConnection();
+
+            httpsConnection.setDoInput(true);
+            httpsConnection.setDoOutput(true);
+            httpsConnection.setUseCaches(false);
+            httpsConnection.setRequestProperty("Content-Type", "application/json");
+            httpsConnection.setRequestProperty("Authorization", "OAuth2 " + token);
+
+            DataOutputStream postOut=new DataOutputStream(httpsConnection.getOutputStream());
+            //postOut.writeBytes(json);
+            postOut.flush();
+            postOut.close();
+            int responseCode=httpsConnection.getResponseCode();
+            if (responseCode == HttpsURLConnection.HTTP_CREATED) {
+                String line;
+                BufferedReader br=new BufferedReader(new InputStreamReader(httpsConnection.getInputStream()));
+                while ((line=br.readLine()) != null) {
+                    System.out.print(line);
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
 }
