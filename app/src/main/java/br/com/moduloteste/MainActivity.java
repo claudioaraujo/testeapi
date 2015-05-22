@@ -2,6 +2,7 @@ package br.com.moduloteste;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.StrictMode;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,21 +30,19 @@ public class MainActivity extends ActionBarActivity  {
 
     public static final String OPTION = "option";
 
-    public static final String TOKEN = "token";
-
-    private static String tokenValue = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         initViews();
         onConfigListener();
         onConfigListItem();
         onConfigActionBar();
-        Intent intent = getIntent();
-        tokenValue = intent.getStringExtra(LoginActivity.TOKEN);
+
         //Se ainda nao foi clicado em nenhum item do menu (esta abrindo pela primeira vez), sera exibido o fragment com o texto configurado para a opcao01
         if (currentFragment == null) {
             replaceFirstFrag();
@@ -139,7 +138,6 @@ public class MainActivity extends ActionBarActivity  {
         currentFragment = new OptionFragment();
         Bundle args = new Bundle();
         args.putInt(OPTION, 0);
-        args.putString(TOKEN, tokenValue);
         currentFragment.setArguments(args);
         replaceFragment(currentFragment);
 

@@ -71,7 +71,6 @@ public class LoginActivity extends Activity {
         web = (WebView)auth_dialog.findViewById(R.id.webv);
         web.getSettings().setJavaScriptEnabled(true);
         web.loadUrl(OAUTH_URL+"?redirect_uri="+REDIRECT_URI+"&response_type=code&client_id="+CLIENT_ID);
-        final Intent mainIntent = new Intent(this, MainActivity.class);
 
         web.setWebViewClient(new WebViewClient() {
 
@@ -103,12 +102,6 @@ public class LoginActivity extends Activity {
                     auth_dialog.dismiss();
                     new TokenGet().execute();
                     Toast.makeText(getApplicationContext(), "Código de acesso: " + authCode, Toast.LENGTH_SHORT).show();
-
-                    //Start da main intent pasando o Token gerado.
-                    TextView tokenText = (TextView) findViewById(R.id.Access);
-                    String token = tokenText.getText().toString();
-                    mainIntent.putExtra(TOKEN, token);
-                    startActivity(mainIntent);
 
                 }else if(url.contains("error=access_denied")){
                     Log.i("", "ACCESS_DENIED_HERE");
@@ -143,16 +136,12 @@ public class LoginActivity extends Activity {
         @Override
         protected JSONObject doInBackground(String... args) {
             GetAccessToken jParser = new GetAccessToken();
-            HttpsCall httpsCall = new HttpsCall();
 
             JSONObject json = null;
-            JSONObject jsonUser = null;
             try {
                 json = jParser.getToken(TOKEN_URL, Code, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, GRANT_TYPE);
                 if (json != null) {
                     tok = json.getString("access_token");
-                    //jsonUser = httpsCall.getUser(tok, ENVIROMENT_URL);
-                    //System.out.print("r");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -165,9 +154,10 @@ public class LoginActivity extends Activity {
             pDialog.dismiss();
             if (json != null){
                 try {
-                    //tok = json.getString("access_token");
+                    //Start da main intent pasando o Token gerado.
                     auth.setText("Autenticado");
                     Access.setText(tok);
+                    redirectMain();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -176,6 +166,12 @@ public class LoginActivity extends Activity {
                 pDialog.dismiss();
             }
         }
+    }
+
+    public void redirectMain() {
+        final Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.putExtra(TOKEN, tok);
+        startActivity(mainIntent);
     }
 
     public void showNewAsset(View view) {

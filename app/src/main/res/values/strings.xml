@@ -15,6 +15,7 @@
     <string name="grant_type">authorization_code</string>
     <string name="token_url">https://demo.riskmanager.modulo.com/RM_240/APIIntegration/Token</string>
     <string name="oauth_url">https://demo.riskmanager.modulo.com/RM_240/APIIntegration/AuthorizeFeatures</string>
+    <string name="info_url">https://demo.riskmanager.modulo.com/RM_240/api/info/me</string>
 
     <string name="title_activity_geo_location_test">GeoLocationTest</string>
     <string name="ok">OK</string>

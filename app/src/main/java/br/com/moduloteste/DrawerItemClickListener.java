@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class DrawerItemClickListener implements OnItemClickListener {
 
@@ -32,6 +33,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
         selectItem(position);
 
     }
+
 
     private void selectItem(int position){
 
