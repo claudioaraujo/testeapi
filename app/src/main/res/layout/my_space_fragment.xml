@@ -22,7 +22,7 @@
 
     <RelativeLayout
         android:background="@color/white"
-        android:layout_width="wrap_content"
+        android:layout_width="330dp"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -31,11 +31,13 @@
 
         <TextView
             android:id="@+id/option_fragment_txt_frag"
-            android:layout_width="271dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/blue_85BAFA"
-            android:textSize="20sp"
-            android:text="Olá, Claudio. Seja Bem Vindo"/>
+            android:textColor="@color/RMBlueFont"
+            android:textSize="25sp"
+            android:text="Olá, seja bem vindo."
+            android:paddingTop="25dp"
+            android:paddingBottom="15dp"/>
 
         <ImageView
             android:id="@+id/image_person"
@@ -48,38 +50,103 @@
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="10sp"
+            android:textColor="@color/RMBlack"
+            android:textSize="15sp"
             android:layout_marginLeft="3dp"
+            android:paddingTop="4dp"
             android:textStyle="bold"
             android:text="Login:"
             android:layout_toRightOf="@+id/image_person"
             android:layout_below="@+id/option_fragment_txt_frag"/>
 
         <TextView
+            android:id="@+id/login_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/RMBlack"
+            android:textSize="15sp"
+            android:layout_marginLeft="3dp"
+            android:paddingTop="4dp"
+            android:textStyle="normal"
+            android:hint="Seu Login do RiskManager"
+            android:layout_toRightOf="@+id/login"
+            android:layout_below="@+id/option_fragment_txt_frag"/>
+
+        <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/RMBlack"
             android:textStyle="bold"
-            android:textSize="10sp"
+            android:textSize="15sp"
             android:layout_marginLeft="3dp"
+            android:paddingTop="4dp"
             android:text="Email:"
             android:layout_toRightOf="@+id/image_person"
             android:layout_below="@+id/login"/>
 
         <TextView
-            android:id="@+id/telefone"
+            android:id="@+id/email_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="10sp"
+            android:textColor="@color/RMBlack"
+            android:textStyle="normal"
+            android:textSize="15sp"
+            android:layout_marginLeft="3dp"
+            android:paddingTop="4dp"
+            android:hint="E-mail de cadastro"
+            android:layout_toRightOf="@+id/email"
+            android:layout_below="@+id/login_info"/>
+
+        <TextView
+            android:id="@+id/nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/RMBlack"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:layout_marginLeft="3dp"
-            android:text="Telefone:"
+            android:paddingTop="4dp"
+            android:text="Nome:"
             android:layout_toRightOf="@+id/image_person"
             android:layout_below="@+id/email"/>
 
+    <TextView
+            android:id="@+id/nome_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/RMBlack"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:layout_marginLeft="3dp"
+            android:paddingTop="4dp"
+            android:hint="Nome do Usuario:"
+            android:layout_toRightOf="@+id/nome"
+            android:layout_below="@+id/email"/>
+
+        <TextView
+            android:id="@+id/grupos_de_acesso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/RMBlack"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="3dp"
+            android:paddingTop="15dp"
+            android:text="Seu usuário faz parte dos seguintes grupos de acesso:"
+            android:layout_below="@+id/image_person"/>
+
+        <TextView
+            android:id="@+id/grupos_de_acesso_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/RMBlack"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:layout_marginLeft="3dp"
+            android:paddingTop="4dp"
+            android:hint="Grupos de Acesso"
+            android:layout_below="@+id/grupos_de_acesso"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -100,9 +167,9 @@
             android:textColor="#FFFFFF"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:gravity="center_horizontal"
+            android:gravity="right"
             android:id="@+id/rodape_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:text="@string/version" />
     </LinearLayout>
 
