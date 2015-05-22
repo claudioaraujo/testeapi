@@ -9,6 +9,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/ativo"
+            android:textColor="@color/RMBlueFont"
             android:drawableLeft="@drawable/ico_organization_assetmanagement"
             android:gravity="center_vertical|left"
             android:elegantTextHeight="false"
@@ -25,6 +26,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/pessoa"
+            android:textColor="@color/RMBlueFont"
             android:drawableLeft="@drawable/ico_organization_humanresources"
             android:gravity="center_vertical|left"
             android:background="@color/RMBlueTransparent"/>
@@ -38,6 +40,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/projetos"
+            android:textColor="@color/RMBlueFont"
             android:drawableLeft="@drawable/ico_project_bg"
             android:gravity="center_vertical|left"
             android:background="@color/RMBlueTransparent"/>
@@ -51,6 +54,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/componentesDeNegocio"
+            android:textColor="@color/RMBlueFont"
             android:drawableLeft="@drawable/ico_organization_businesscomponents"
             android:gravity="center_vertical|left"
             android:background="@color/RMBlueTransparent"/>
@@ -64,6 +68,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/relatorios"
+            android:textColor="@color/RMBlueFont"
             android:drawableLeft="@drawable/ico_report_default_80"
             android:gravity="center_vertical|left"
             android:background="@color/RMBlueTransparent"/>
