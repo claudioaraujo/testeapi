@@ -92,6 +92,9 @@
     <string name="componentesDeNegocio">COMPONENTES DE NEGÓCIO\n\n Gerenciar Componentes de Negócio</string>
     <string name="relatorios">RELATÓRIO\n\nGerar Relatórios, Modelos e Agendamentos</string>
 
+    <string name="asset">Ativos</string>
+    <string name="asset_perimeter_label">Perimetro</string>
+
 
     <string name="version">9.2.135.22</string>
     <string name="title_activity_asset_main">AssetMainActivity</string>
