@@ -94,4 +94,5 @@
 
 
     <string name="version">9.2.135.22</string>
+    <string name="title_activity_asset_main">AssetMainActivity</string>
 </resources>
