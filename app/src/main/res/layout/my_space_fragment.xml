@@ -35,7 +35,16 @@
             android:layout_height="wrap_content"
             android:textColor="@color/RMBlueFont"
             android:textSize="25sp"
-            android:text="Olá, seja bem vindo."
+            android:text="Olá, "
+            android:paddingTop="25dp"
+            android:paddingBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/nome_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/RMBlueFont"
+            android:textSize="25sp"
             android:paddingTop="25dp"
             android:paddingBottom="15dp"/>
 
@@ -99,31 +108,6 @@
             android:layout_toRightOf="@+id/email"
             android:layout_below="@+id/login_info"/>
 
-        <TextView
-            android:id="@+id/nome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/RMBlack"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="3dp"
-            android:paddingTop="4dp"
-            android:text="Nome:"
-            android:layout_toRightOf="@+id/image_person"
-            android:layout_below="@+id/email_info"/>
-
-    <TextView
-            android:id="@+id/nome_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/RMBlack"
-            android:textSize="15sp"
-            android:textStyle="normal"
-            android:layout_marginLeft="3dp"
-            android:paddingTop="4dp"
-            android:hint="Nome do Usuario:"
-            android:layout_toRightOf="@+id/nome"
-            android:layout_below="@+id/email_info"/>
 
         <TextView
             android:id="@+id/grupos_de_acesso"
