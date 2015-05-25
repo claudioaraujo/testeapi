@@ -23,38 +23,38 @@ public class HttpsCall {
 
     public String sendPostNewAsset (String token, String address, String json) throws IOException {
         String oid = "";
+        try{
+            URL url = new URL(address);
+            HttpsURLConnection httpsConnection = (HttpsURLConnection)url.openConnection();
 
-        URL url = new URL(address);
-        HttpsURLConnection httpsConnection = (HttpsURLConnection)url.openConnection();
+            httpsConnection.setDoInput(true);
+            httpsConnection.setDoOutput(true);
+            httpsConnection.setUseCaches(false);
+            httpsConnection.setRequestProperty("Content-Type", "application/json");
+            httpsConnection.setRequestProperty("Authorization", "OAuth2 " + token);
 
-        httpsConnection.setDoInput(true);
-        httpsConnection.setDoOutput(true);
-        httpsConnection.setUseCaches(false);
-        httpsConnection.setRequestProperty("Content-Type", "application/json");
-        httpsConnection.setRequestProperty("Authorization", "OAuth2 " + token);
-
-        DataOutputStream postOut=new DataOutputStream(httpsConnection.getOutputStream());
-        postOut.writeBytes(json);
-        postOut.flush();
-        postOut.close();
-        int responseCode=httpsConnection.getResponseCode();
-        if (responseCode == HttpsURLConnection.HTTP_CREATED) {
-            String line;
-            BufferedReader br=new BufferedReader(new InputStreamReader(httpsConnection.getInputStream()));
-            while ((line=br.readLine()) != null) {
-                oid += line;
+            DataOutputStream postOut=new DataOutputStream(httpsConnection.getOutputStream());
+            postOut.writeBytes(json);
+            postOut.flush();
+            postOut.close();
+            int responseCode=httpsConnection.getResponseCode();
+            if (responseCode == HttpsURLConnection.HTTP_CREATED) {
+                String line;
+                BufferedReader br=new BufferedReader(new InputStreamReader(httpsConnection.getInputStream()));
+                while ((line=br.readLine()) != null) {
+                    oid += line;
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
         return oid;
     }
 
-    public JSONObject getJson (String address, String token) throws JSONException {
+    public String getJson (String address, String token) throws JSONException {
         String response = "";
-
         try{
             URL url = new URL(address);
-            //HttpsURLConnection httpsConnection = (HttpsURLConnection)url.openConnection();
             HttpURLConnection httpsConnection = (HttpURLConnection) url.openConnection();
 
             httpsConnection.setRequestMethod("GET");
@@ -66,11 +66,11 @@ public class HttpsCall {
             while (data != -1) {
                 response += (char) data;
                 data = isw.read();
-
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new JSONObject(response);
+        return response;
     }
 }
