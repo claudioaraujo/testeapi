@@ -1,8 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context="br.com.moduloteste.AssetMainActivity">
+    tools:context="br.com.moduloteste.AssetMainActivity" >
 
     <TextView
         android:id="@+id/asset_main_label"
@@ -15,22 +16,117 @@
         android:paddingLeft="15dp"
         android:paddingTop="5dp"/>
 
-    <LinearLayout
+    <TextView
+        android:layout_below="@+id/asset_main_label"
+        android:id="@+id/perimeter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/asset_main_label">
+        android:textColor="@color/RMBlueFont"
+        android:textStyle="normal"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:text="@string/asset_perimeter_label"/>
 
-        <TextView
+    <RelativeLayout
+        android:layout_below="@+id/perimeter"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/content" >
+
+        <ListView
+            android:id="@+id/list"
+            android:choiceMode="singleChoice"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/RMBlueFont"
-            android:textStyle="normal"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:text="@string/asset_perimeter_label"/>
+            android:divider="#ECECEC"
+            android:dividerHeight="1sp" />
 
+    </RelativeLayout>
 
+    <TextView
+        android:id="@+id/selected_perimeter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/RMBlueFont"
+        android:layout_below="@+id/content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:text="@string/selected_perimeter"/>
 
+    <TextView
+        android:id="@+id/selected_perimeter_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/RMBlueFont"
+        android:layout_below="@+id/selected_perimeter"
+        android:textStyle="normal"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/new_asset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_asset"
+        android:layout_below="@+id/selected_perimeter_info"
+        android:textColor="@color/RMBlueFont"
+        android:drawableLeft="@drawable/ico_add"
+        android:layout_marginTop="45dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
+        android:elegantTextHeight="false"
+        android:background="@color/RMButtonGray"
+        android:clickable="true"
+        android:singleLine="false"
+        android:onClick="showNewAsset"/>
+
+    <Button
+        android:id="@+id/list_asset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selected_perimeter_info"
+        android:layout_marginTop="45dp"
+        android:layout_marginLeft="25dp"
+        android:text="@string/list_asset"
+        android:textColor="@color/RMBlueFont"
+        android:drawableLeft="@drawable/ico_assets"
+        android:gravity="center_vertical|left"
+        android:layout_toRightOf="@+id/new_asset"
+        android:elegantTextHeight="false"
+        android:background="@color/RMButtonGray"
+        android:clickable="true"
+        android:singleLine="false"
+        android:onClick="showNewAsset"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:id="@+id/rodape"
+        android:padding="10dip">
+
+        <ImageView
+            android:id="@+id/powered_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/powered_by_modulo" />
+
+        <TextView
+            android:textColor="#FFFFFF"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="right"
+            android:id="@+id/rodape_text"
+            android:textSize="12sp"
+            android:text="@string/version" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -11,4 +11,5 @@
     <color name="RMBlueTransparent">#1085BAFA</color>
     <color name="RMBlueFont">#2c5078</color>
     <color name="RMBlack">#3c3c3c</color>
+    <color name="RMButtonGray">#eee</color>
 </resources>

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity  {
@@ -27,6 +28,7 @@ public class MainActivity extends ActionBarActivity  {
     private ActionBar actionBar;
     private DrawerItemClickListener listener;
     private Fragment currentFragment;
+    private static String token;
 
     public static final String OPTION = "option";
 
@@ -42,6 +44,8 @@ public class MainActivity extends ActionBarActivity  {
         onConfigListener();
         onConfigListItem();
         onConfigActionBar();
+
+        token = this.getIntent().getExtras().getString(LoginActivity.TOKEN);
 
         //Se ainda nao foi clicado em nenhum item do menu (esta abrindo pela primeira vez), sera exibido o fragment com o texto configurado para a opcao01
         if (currentFragment == null) {
@@ -82,7 +86,7 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
-    private void onConfigListItem(){
+    private void onConfigListItem() {
 
         drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, textOptions));
 
@@ -141,5 +145,11 @@ public class MainActivity extends ActionBarActivity  {
         currentFragment.setArguments(args);
         replaceFragment(currentFragment);
 
+    }
+
+    public void showAssetMain(View view) {
+        final Intent intent = new Intent(this, AssetMainActivity.class);
+        intent.putExtra("TOKEN", token);
+        startActivity(intent);
     }
 }

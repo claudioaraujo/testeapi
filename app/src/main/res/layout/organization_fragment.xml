@@ -15,7 +15,8 @@
             android:elegantTextHeight="false"
             android:background="@color/RMBlueTransparent"
             android:clickable="true"
-            android:singleLine="false" />
+            android:singleLine="false"
+            android:onClick="showAssetMain"/>
 
         <View
             android:layout_width="0dp"

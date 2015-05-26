@@ -10,16 +10,17 @@ import br.com.moduloteste.api.call.HttpsCall;
 public class OrganizationController {
 
     public String newAsset(String assetJSON, String token, String address) throws IOException {
+        String oid = "";
         try {
             HttpsCall apiCall = new HttpsCall();
             address = address + "/api/Organization/assets";
 
-            String oid = apiCall.sendPostNewAsset(token, address, assetJSON);
+            oid = apiCall.sendPostNewAsset(token, address, assetJSON);
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
-        return assetJSON;
+        return oid;
     }
 }

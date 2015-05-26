@@ -1,108 +1,179 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="br.com.moduloteste.NewAssetActivity"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient"
+    tools:context="br.com.moduloteste.NewAssetActivity" >
 
-    <TextView
-        android:textStyle="bold|italic"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="330dp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:text="@string/asset_name_label"/>
-    <EditText
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/asset_name"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/content" >
 
-    <TextView
-        android:textStyle="bold|italic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/asset_type_label"/>
-    <Spinner
-        android:id="@+id/asset_type"
+        <TextView
+            android:id="@+id/asset_name_text"
+            android:textStyle="bold|italic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/asset_name_label"/>
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:background="@color/RMBlueTransparent"
+            android:layout_below="@+id/asset_name_text"
+            android:id="@+id/asset_name"/>
+
+        <TextView
+            android:id="@+id/asset_type_text"
+            android:layout_below="@id/asset_name"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold|italic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/asset_type_label"/>
+        <Spinner
+            android:layout_below="@+id/asset_type_text"
+            android:id="@+id/asset_type"
+            android:background="@color/RMBlueTransparent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/perimeter_text"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/asset_type"
+            android:textStyle="bold|italic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/perimeter_label"/>
+        <TextView
+            android:layout_below="@+id/perimeter_text"
+            android:id="@+id/perimeter"
+            android:background="@color/RMBlueTransparent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/relevance_text"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/perimeter"
+            android:textStyle="bold|italic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/relevance_label"/>
+        <Spinner
+            android:layout_below="@+id/relevance_text"
+            android:id="@+id/relevance"
+            android:background="@color/RMBlueTransparent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/asset_geo_text"
+            android:layout_below="@id/relevance"
+            android:textStyle="bold|italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/latitude_label"/>
+        <EditText
+            android:layout_below="@+id/asset_geo_text"
+            android:layout_height="wrap_content"
+            android:layout_width="142dp"
+            android:background="@color/RMBlueTransparent"
+            android:id="@+id/asset_latitude"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/asset_longitude_text"
+            android:layout_toRightOf="@+id/asset_geo_text"
+            android:layout_below="@id/relevance"
+            android:layout_marginLeft="105dp"
+            android:textStyle="bold|italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/longitude_label"/>
+        <EditText
+            android:layout_below="@+id/asset_geo_text"
+            android:layout_toRightOf="@+id/asset_latitude"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:layout_width="142dp"
+            android:background="@color/RMBlueTransparent"
+            android:id="@+id/asset_longitude"/>
+
+        <ImageButton
+            android:layout_below="@+id/asset_geo_text"
+            android:layout_toRightOf="@+id/asset_longitude"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/location"
+            android:text="@string/get_location"
+            android:onClick="goGetLocation"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/asset_longitude"
+            android:textStyle="bold|italic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/asset_description_text"
+            android:text="@string/description_label"/>
+        <EditText
+            android:layout_below="@id/asset_description_text"
+            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:background="@color/RMBlueTransparent"
+            android:id="@+id/asset_description"/>
+
+        <ImageButton
+            android:layout_below="@id/asset_description_text"
+            android:layout_toRightOf="@+id/asset_description"
+            android:id="@+id/scan_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/barcode_scanner"
+            android:onClick="scanBtn"/>
+
+        <Button
+            android:layout_below="@+id/scan_button"
+            android:drawableLeft="@drawable/ico_save"
+            android:textColor="@color/RMBlueFont"
+            android:background="@color/RMButtonGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="125dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/insertAsset"
+            android:text="@string/save"
+            android:onClick="insertAsset"/>
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:textStyle="bold|italic"
-        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:text="@string/perimeter_label"/>
-    <Spinner
-        android:id="@+id/perimeter"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/rodape"
+        android:padding="10dip">
 
-    <TextView
-        android:textStyle="bold|italic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/relevance_label"/>
-    <Spinner
-        android:id="@+id/relevance"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/powered_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/powered_by_modulo" />
 
-    <TextView
-        android:textStyle="bold|italic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/latitude_label"/>
-    <EditText
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/asset_latitude"/>
-
-    <TextView
-        android:textStyle="bold|italic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/longitude_label"/>
-    <EditText
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/asset_longitude"/>
-
-    <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/location"
-        android:text="@string/get_location"
-        android:onClick="goGetLocation"/>
-
-    <TextView
-        android:textStyle="bold|italic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/description_label"/>
-    <EditText
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/asset_description"/>
-
-    <ImageButton
-        android:id="@+id/scan_button"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/barcode_scanner"
-        android:onClick="scanBtn"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/insertAsset"
-        android:text="@string/insert_asset"
-        android:onClick="insertAsset"/>
-
-</LinearLayout>
-</ScrollView>
+        <TextView
+            android:textColor="#FFFFFF"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="right"
+            android:id="@+id/rodape_text"
+            android:textSize="12sp"
+            android:text="@string/version" />
+    </LinearLayout>
+</RelativeLayout>

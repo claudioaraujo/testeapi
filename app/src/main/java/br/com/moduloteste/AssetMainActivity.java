@@ -1,38 +1,88 @@
 package br.com.moduloteste;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import java.util.ArrayList;
 
+import br.com.moduloteste.objects.Perimeter;
 
-public class AssetMainActivity extends ActionBarActivity {
+public class AssetMainActivity extends Activity implements AdapterView.OnItemClickListener {
+
+    private ListView listView;
+    private PerimterAdapter adapterListView;
+    private ArrayList<Perimeter> itens;
+    public final static String TOKEN = "TOKEN";
+    public final static String PERIMETER = "PERIMETER";
+    private static String token;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        //carrega o layout onde contem o ListView
+
+        token = this.getIntent().getExtras().getString("TOKEN");
+
         setContentView(R.layout.activity_asset_main);
+
+        //Pega a referencia do ListView
+        listView = (ListView) findViewById(R.id.list);
+        //Define o Listener quando alguem clicar no item.
+        listView.setOnItemClickListener(this);
+
+        createListView();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_asset_main, menu);
-        return true;
+    private void createListView()
+    {
+        //Criamos nossa lista que preenchera o ListView
+        itens = new ArrayList<Perimeter>();
+        Perimeter item1 = new Perimeter();
+        item1.setIcon(R.drawable.ico_perimeter);
+        item1.setName("API");
+        Perimeter item2 = new Perimeter();
+        item2.setIcon(R.drawable.ico_perimeter);
+        item2.setName("API > Desktop");
+        Perimeter item3 = new Perimeter();
+        item3.setIcon(R.drawable.ico_perimeter);
+        item3.setName("API > Fonte");
+        Perimeter item4 = new Perimeter();
+        item4.setIcon(R.drawable.ico_perimeter);
+        item4.setName("API > Notebook");
+
+        itens.add(item1);
+        itens.add(item2);
+        itens.add(item3);
+        itens.add(item4);
+
+        //Cria o adapter
+        adapterListView = new PerimterAdapter(this, itens);
+
+        //Define o Adapter
+        listView.setAdapter(adapterListView);
+        //Cor quando a lista e selecionada para ralagem.
+        //listView.setCacheColorHint(Color.TRANSPARENT);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+    {
+        //Pega o item que foi selecionado.
+        Perimeter item = adapterListView.getItem(arg2);
+        //Demostracao
+        TextView selectedPerimeter = (TextView) findViewById(R.id.selected_perimeter_info);
+        selectedPerimeter.setText(item.getName());
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void showNewAsset(View view) {
+        TextView selectedPerimeter = (TextView) findViewById(R.id.selected_perimeter_info);
+        final Intent intent = new Intent(this, NewAssetActivity.class);
+        intent.putExtra(TOKEN, token);
+        intent.putExtra(PERIMETER, selectedPerimeter.getText());
+        startActivity(intent);
     }
 }

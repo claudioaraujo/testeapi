@@ -62,8 +62,8 @@ public class LoginActivity extends Activity {
         OAUTH_URL = (String) this.getResources().getText(oauthUrl);
 
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
-        Access =(TextView)findViewById(R.id.Access);
-        auth = (Button)findViewById(R.id.auth);
+        //Access =(TextView)findViewById(R.id.Access);
+        //auth = (Button)findViewById(R.id.auth);
         final Dialog auth_dialog;
 
         auth_dialog = new Dialog(LoginActivity.this);
@@ -155,8 +155,6 @@ public class LoginActivity extends Activity {
             if (json != null){
                 try {
                     //Start da main intent pasando o Token gerado.
-                    auth.setText("Autenticado");
-                    Access.setText(tok);
                     redirectMain();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -172,14 +170,6 @@ public class LoginActivity extends Activity {
         final Intent mainIntent = new Intent(this, MainActivity.class);
         mainIntent.putExtra(TOKEN, tok);
         startActivity(mainIntent);
-    }
-
-    public void showNewAsset(View view) {
-        Intent intent = new Intent(this, NewAssetActivity.class);
-        TextView tokenText = (TextView) findViewById(R.id.Access);
-        String token = tokenText.getText().toString();
-        intent.putExtra(TOKEN, token);
-        startActivity(intent);
     }
 
 }

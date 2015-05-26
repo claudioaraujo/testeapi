@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_get_access_token">GetAccessToken</string>
     <string name="title_activity_new_asset">Novo Ativo</string>
-    <string name="insert_asset">Cadastrar ativo</string>
+    <string name="save">Salvar</string>
 
     <string name="enviroment">RM_240</string>
     <string name="enviroment_url">https://demo.riskmanager.modulo.com/RM_240</string>
@@ -41,8 +41,8 @@
     <string-array name="perimeter">
         <item></item>
         <item>API</item>
-        <item>Projetos</item>
-        <item>Turismo</item>
+        <item>API/Notebook</item>
+        <item>API/Teclado</item>
     </string-array>
 
     <string name="start_updates">Iniciar atualização</string>
@@ -98,5 +98,10 @@
 
 
     <string name="version">9.2.135.22</string>
-    <string name="title_activity_asset_main">AssetMainActivity</string>
+    <string name="title_activity_asset_main">Ativos</string>
+    <string name="select_perimeter">Selecione o perímetro</string>
+    <string name="new_asset">Adicionar ativo</string>
+    <string name="list_asset">Listar ativos</string>
+    <string name="selected_perimeter">Perímetro selecionado:</string>
+
 </resources>

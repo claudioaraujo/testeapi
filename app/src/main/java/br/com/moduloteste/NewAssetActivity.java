@@ -1,6 +1,7 @@
 package br.com.moduloteste;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -19,7 +20,7 @@ import br.com.moduloteste.controller.GeoLocationController;
 import br.com.moduloteste.controller.OrganizationController;
 import br.com.moduloteste.objects.Asset;
 
-public class NewAssetActivity extends ActionBarActivity {
+public class NewAssetActivity extends Activity {
 
     static final int GET_LOCATION_RESPONSE = 11;
     private String address;
@@ -30,16 +31,16 @@ public class NewAssetActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_asset);
 
+        token = this.getIntent().getExtras().getString(AssetMainActivity.TOKEN);
+
         //Preenchimento das combos
         Spinner assetTypeSpinner = (Spinner) findViewById(R.id.asset_type);
         ArrayAdapter<CharSequence> assetTypeAdapter = ArrayAdapter.createFromResource(this, R.array.asset_type, android.R.layout.simple_spinner_item);
         assetTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetTypeSpinner.setAdapter(assetTypeAdapter);
 
-        Spinner perimeterSpinner = (Spinner) findViewById(R.id.perimeter);
-        ArrayAdapter<CharSequence> perimeterAdapter = ArrayAdapter.createFromResource(this, R.array.perimeter, android.R.layout.simple_spinner_item);
-        perimeterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        perimeterSpinner.setAdapter(perimeterAdapter);
+        TextView perimeterText = (TextView) findViewById(R.id.perimeter);
+        perimeterText.setText(this.getIntent().getExtras().getString(AssetMainActivity.PERIMETER));
 
         Spinner relevanceSpinner = (Spinner) findViewById(R.id.relevance);
         ArrayAdapter<CharSequence> relevanceAdapter = ArrayAdapter.createFromResource(this, R.array.relevance, android.R.layout.simple_spinner_item);
@@ -62,14 +63,11 @@ public class NewAssetActivity extends ActionBarActivity {
             int addressId = R.string.enviroment_url;
             address = (String) getResources().getText(addressId);
 
-            Intent intent = getIntent();
-            token = intent.getStringExtra(LoginActivity.TOKEN);
-
             EditText editAssetName = (EditText) findViewById(R.id.asset_name);
             asset.setName(editAssetName.getText().toString());
 
-            Spinner perimeterSpinner = (Spinner) findViewById(R.id.perimeter);
-            asset.setPerimeter(perimeterSpinner.getSelectedItem().toString());
+            TextView perimeterText = (TextView) findViewById(R.id.perimeter);
+            asset.setPerimeter(perimeterText.getText().toString());
 
             Spinner assetTypeSpinner = (Spinner) findViewById(R.id.asset_type);
             asset.setType(assetTypeSpinner.getSelectedItem().toString());
@@ -116,7 +114,6 @@ public class NewAssetActivity extends ActionBarActivity {
             }
         }
 
-
     }
 
     public class process extends AsyncTask<String, Void, String>{
@@ -134,8 +131,12 @@ public class NewAssetActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(String oid) {
-            Toast.makeText(getApplicationContext(), "Cadastro realizado com sucesso.", Toast.LENGTH_SHORT).show();
-            finish();
+            if (oid != "") {
+                Toast.makeText(getApplicationContext(), "Cadastro realizado com sucesso.", Toast.LENGTH_SHORT).show();
+                finish();
+            }else{
+                Toast.makeText(getApplicationContext(), "Erro ao tentar cadastrar", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
